@@ -28,12 +28,13 @@ pipeline{
       steps{
         sshagent(credentials:['credentials']){
           sh '''
+          flask run
           pytest ./tests/hello_test.py
           '''
         }
       }
     }
-    stage('Copying to EC2'){
+    stage('Deploying to EC2'){
             steps{
                 sshagent(credentials: ['ishwari']) {
                     script {
@@ -43,6 +44,7 @@ pipeline{
                                 ls
                             '
                             scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
+                            flask run
                         """
                     }
             }
