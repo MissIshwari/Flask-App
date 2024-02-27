@@ -20,7 +20,7 @@ pipeline{
                         sh """
                             ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
                                 sudo apt update
-                                sudo apt install python
+                                sudo apt install python3
                                 sudo apt install pip -y
                                 sudo pip install -r requirements.txt
                             '
