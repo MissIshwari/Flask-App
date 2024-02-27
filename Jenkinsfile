@@ -18,14 +18,15 @@ pipeline{
           sshagent(credentials: ['ishwari-california-vired']) {
                     script {
                         sh """
+                            scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
+                            
                             ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
                                 sudo apt update
                                 sudo apt install python3
                                 sudo apt install pip -y
                                 sudo pip install -r requirements.txt
                             '
-                            scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
-                            flask run
+                            
                         """
                     }
             }
