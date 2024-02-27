@@ -4,7 +4,7 @@ pipeline{
         GITHUB_URL='https://github.com/MissIshwari/Flask-App.git'
         BRANCH='main'
         SSH_USER='ubuntu'
-        SSH_EC2='3.235.16.31'
+        SSH_EC2='3.235.16.11'
     }
   stages{
     stage('Clone github repo flask project'){
