@@ -21,8 +21,8 @@ pipeline{
                             ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
                                 sudo apt update
                                 sudo apt install python
-                                sudo apt install pip
-                                sudo python -m pip install -r requirements.txt
+                                sudo apt install pip -y
+                                sudo pip install -r requirements.txt
                             '
                             scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
                             flask run
