@@ -4,7 +4,7 @@ pipeline{
         GITHUB_URL='https://github.com/MissIshwari/Flask-App.git'
         BRANCH='main'
         SSH_USER='ubuntu'
-        SSH_EC2='3.235.16.11'
+        SSH_EC2='13.41.186.190'
     }
   stages{
     stage('Clone github repo flask project'){
@@ -15,20 +15,26 @@ pipeline{
     stage("Build"){
       steps{
         script{
-          
-          sh '''
-          sudo apt install python3
-          sudo apt install pip3
-          sudo pip install -r requirements.txt
-          
-          '''
+          sshagent(credentials: ['ishwari-california-vired']) {
+                    script {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
+                                sudo apt install python3
+                                sudo apt install pip3
+                                sudo pip install -r requirements.txt
+                            '
+                            scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
+                            flask run
+                        """
+                    }
+            }
         }
         
       }
     }
     stage("Test"){
       steps{
-        sshagent(credentials:['credentials']){
+        sshagent(credentials:['ishwari-california-vired']){
           sh '''
           flask run
           pytest ./tests/hello_test.py
@@ -38,7 +44,7 @@ pipeline{
     }
     stage('Deploying to EC2'){
             steps{
-                sshagent(credentials: ['ishwari']) {
+                sshagent(credentials: ['ishwari-california-vired']) {
                     script {
                         sh """
                             ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
