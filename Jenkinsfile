@@ -22,7 +22,7 @@ pipeline{
                                 sudo apt update
                                 sudo apt install python
                                 sudo apt install pip
-                                sudo pip install -r requirements.txt
+                                sudo python -m pip install -r requirements.txt
                             '
                             scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
                             flask run
