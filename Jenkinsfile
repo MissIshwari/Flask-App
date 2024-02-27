@@ -4,7 +4,7 @@ pipeline{
         GITHUB_URL='https://github.com/MissIshwari/Flask-App.git'
         BRANCH='main'
         SSH_USER='ubuntu'
-        SSH_EC2='3.235.86.2331'
+        SSH_EC2='3.235.86.331'
     }
   stages{
     stage('Clone github'){
