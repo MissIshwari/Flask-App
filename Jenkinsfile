@@ -24,6 +24,7 @@ pipeline{
                                 sudo apt update
                                 sudo apt install python3
                                 sudo apt install pip -y
+                                sudo pwd
                                 sudo pip install -r requirements.txt
                             '
                             
