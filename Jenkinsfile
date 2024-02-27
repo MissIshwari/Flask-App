@@ -7,7 +7,7 @@ pipeline{
         SSH_EC2='3.235.86.331'
     }
   stages{
-    stage('Clone github flask project'){
+    stage('Clone github repo flask project'){
             steps{
                 git branch: env.BRANCH, url: env.GITHUB_URL
             }
