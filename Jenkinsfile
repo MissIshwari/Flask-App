@@ -17,7 +17,8 @@ pipeline{
         script{
           
           sh '''
-          sudo apt install python
+          sudo apt install python3
+          sudo apt install pip3
           sudo pip install -r requirements.txt
           
           '''
