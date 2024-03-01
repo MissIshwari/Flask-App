@@ -15,7 +15,7 @@ pipeline{
     stage("Build"){
       steps{
         script{
-          sshagent(['ishwari-california-vired']) {
+          sshagent(credentials: ['ishwari-california-vired']) {
                     script {
                         sh """
                             scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@${SSH_EC2}:/home/ubuntu
@@ -37,7 +37,7 @@ pipeline{
     }
     stage("Test"){
       steps{
-        sshagent(['ishwari-california-vired']){
+        sshagent(credentials: ['ishwari-california-vired']){
           sh '''
           flask run
           pytest ./tests/hello_test.py
@@ -47,7 +47,7 @@ pipeline{
     }
     stage('Deploying to EC2'){
             steps{
-                sshagent(['ishwari-california-vired']) {
+                sshagent(credentials: ['ishwari-california-vired']) {
                     script {
                         sh """
                             ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_EC2} '
