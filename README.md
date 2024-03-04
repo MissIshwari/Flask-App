@@ -7,6 +7,8 @@ Environment variables are declared for github repository, branch to run the pipe
 There are exactly 4 stages in my pipeline, namely
 Cloning the flask application, building the application, testing it and deploying to a staging area.
 
+Set branch as main under branch name to pull.
+
 Selected Poll SCM option in jenkins pipeline to trigger with a per minute schedule.
 
 
