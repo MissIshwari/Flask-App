@@ -16,3 +16,9 @@ Github action -
 main.yml within .github/workflows folder executes whenever there is a new commit in staging branch, 
 Created github secrets for deployment.
 
+Created secrets from Settings > Secrets and variables > Actions
+EC2_HOST, EC2_USERNAME, EC2_KEY
+
+
+
+
