@@ -1,0 +1,55 @@
+name: Python CI/CD
+
+on:
+  push:
+    branches:
+      - staging
+  pull_request:
+    branches:
+      - staging
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on:  ubuntu-latest
+    steps:
+      -  name:  Checkout code
+         uses:  actions/checkout@v4
+
+      -  name:  Login and Update EC2
+         uses:  appleboy/ssh-action@v1.0.3
+         with:
+           host:  52.54.64.249
+           username:  ${{secrets.EC2_USERNAME}}
+           key:  ${{secrets.EC2_KEY}}
+           port:  5000
+           script:  |
+             sudo apt-get update -y
+             sudo apt-get install python3
+             sudo apt-get install pip
+             sudo chown -R ${{secrets.EC2_USERNAME}} /home/ubuntu
+             sudo chmod -R 755 /home/ubuntu
+
+      
+             
+      -  name:  Copy file with ssh
+         uses:  appleboy/scp-action@v0.1.7
+         with:
+            host:  ${{secrets.EC2_HOST}}
+            username:  ${{secrets.EC2_USERNAME}}
+            key:  ${{secrets.EC2_KEY}}
+            port:  22
+            source:  ./
+            target:  /home/ubuntu
+
+      -  name:  Start Flask application
+         uses:  appleboy/ssh-action@v1.0.3
+         with:
+           host:  ${{secrets.EC2_HOST}}
+           username:  ${{secrets.EC2_USERNAME}}
+           key:  ${{secrets.EC2_KEY}}
+           port:  5000
+           script:  |
+             sudo flask run
+             sudo pytest ./test/hello_world_test.py
